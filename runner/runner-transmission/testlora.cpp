@@ -56,11 +56,11 @@ int ReadFile(){
     for (i=0;i<DATANUM;i++){
         while(!data.eof()){
             data.getline(buffer,100);
-            //str[i] = buffer;
-            //cout << str[i] << endl;
-            e = sx1272.sendPacketTimeout(1, buffer);
-            printf("Packet sent, state %d\n",e); 
-	    printf("data is: %s\n",buffer);          
+            if(strcmp(buffer,"")!=0){
+		e = sx1272.sendPacketTimeout(1, buffer);
+                printf("Packet sent, state %d\n",e); 
+	        printf("data is: %s\n",buffer);   
+	    }       
             delay(2000);
         }      
     }
@@ -110,22 +110,6 @@ void setup()
   delay(1000);
 }
 
-/*void loop(void)
-{
-    int i=0;
-    char *lorabuffer = new char[str[i].length()+1];
-    lorabuffer="a";
-    for(i=0;i<DATANUM;i++){
-	// Send message and print the result
-        strcpy(lorabuffer,str[i].c_str());
-        printf("data is: %s which\n",lorabuffer);
-        e = sx1272.sendPacketTimeout(0, lorabuffer);
-        printf("Packet sent, state %d\n",e);           
-        delay(400);
-    }
- 
-}*/
-
 int main (){
 	setup();
 	int flag = 0;
@@ -133,11 +117,6 @@ int main (){
 		flag = UsingPython();
 		if(!flag){
 			flag = ReadFile();
-                        /*cout<<flag<<endl;
-			if(!flag){
-				loop();
-                                cout<<"process finish"<<endl;
-			}*/
 		}
 	}
 	return (0);
